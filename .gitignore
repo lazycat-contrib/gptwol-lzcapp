@@ -1,0 +1,4 @@
+dist/*
+!dist/.gitkeep
+*.lpk
+.lazycat-build/

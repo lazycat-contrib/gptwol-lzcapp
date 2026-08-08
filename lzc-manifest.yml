@@ -1,0 +1,59 @@
+application:
+  subdomain: gptwol
+  background_task: true
+  oidc_redirect_path: /auth/oidc/callback
+  upstreams:
+    - location: /
+      backend: http://host.lzcapp:{{ .U.web_port }}/
+  injects:
+    - id: local-login-autofill
+      when:
+        - /login
+      do:
+        - src: builtin://simple-inject-password
+          params:
+            user: "{{ .U.local_username }}"
+            password: "{{ .U.local_password }}"
+            userSelector: "input[name='username']"
+            passwordSelector: "input[name='password']"
+            submitSelector: "button[type='submit']"
+            autoSubmit: false
+
+services:
+  gptwol:
+    # upstream: docker.io/misterbabou/gptwol:4.1.0
+    image: registry.lazycat.cloud/czyt/misterbabou/gptwol:ded4acaeb6c1f065
+    network_mode: host
+    environment:
+      - PORT={{ .U.web_port }}
+      - IP=0.0.0.0
+      - TZ={{ .U.timezone }}
+      - LOG_LEVEL={{ .U.log_level }}
+      - ENABLE_LOGIN={{ .U.enable_local_login }}
+      - USERNAME={{ .U.local_username }}
+      - PASSWORD={{ .U.local_password }}
+      - OIDC_ENABLED={{ .U.enable_oidc }}
+      - OIDC_ISSUER=${LAZYCAT_AUTH_OIDC_ISSUER_URI}
+      - OIDC_CLIENT_ID=${LAZYCAT_AUTH_OIDC_CLIENT_ID}
+      - OIDC_CLIENT_SECRET=${LAZYCAT_AUTH_OIDC_CLIENT_SECRET}
+      - OIDC_REDIRECT_URI=https://${LAZYCAT_APP_DOMAIN}
+      - OIDC_SCOPES=openid email profile groups
+      - ENABLE_ADD_DEL={{ .U.enable_add_delete }}
+      - ENABLE_REFRESH={{ .U.enable_refresh }}
+      - REFRESH_INTERVAL={{ .U.refresh_interval }}
+      - PING_TIMEOUT={{ .U.ping_timeout }}
+      - ARP_INTERFACE={{ .U.arp_interface }}
+      - ARP_TIMEOUT={{ .U.arp_timeout }}
+      - TCP_TIMEOUT={{ .U.tcp_timeout }}
+      - ENABLE_L2_WOL_PACKET={{ .U.enable_l2_wol }}
+      - L2_INTERFACE={{ .U.l2_interface }}
+    binds:
+      - /lzcapp/var/db:/app/db
+      - /lzcapp/var/cron.d:/etc/cron.d
+
+usage: |
+  默认同时启用懒猫账号 OIDC 登录和 GPTWOL 本地账号登录。
+  登录页可选择“Login with SSO”，也可使用向导中设置的本地用户名和密码。
+  本地登录表单会自动填充凭据，但不会自动提交。
+  Wake-on-LAN 需要目标设备在 BIOS 和操作系统中启用网络唤醒，并与懒猫设备处于可达局域网。
+  使用 L2 WOL 或 ARP 扫描时，请在设置向导中填写懒猫主机实际的局域网接口名称。

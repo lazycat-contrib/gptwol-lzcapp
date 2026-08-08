@@ -1,0 +1,19 @@
+package: cloud.lazycat.app.gptwol
+version: 4.1.0
+name: GPTWOL
+description: A lightweight Wake-on-LAN and Sleep-on-LAN dashboard for managing computers on your local network.
+min_os_version: 1.5.0
+homepage: https://github.com/Misterbabou/gptwol
+author: Misterbabou
+license: MIT
+permissions:
+  required:
+    - net.internet
+    - net.host
+locales:
+  zh:
+    name: GPTWOL
+    description: 通过网页管理局域网设备的唤醒、关机、状态检测和定时任务。
+  en:
+    name: GPTWOL
+    description: Manage Wake-on-LAN, Sleep-on-LAN, status checks, and schedules from a web dashboard.

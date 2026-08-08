@@ -1,0 +1,148 @@
+params:
+  - id: web_port
+    type: string
+    name: Web Port
+    description: Host port used by GPTWOL (1-65535; change it if 9527 is already in use)
+    default_value: "9527"
+
+  - id: timezone
+    type: string
+    name: Timezone
+    description: IANA timezone used by cron jobs, for example Asia/Shanghai
+    default_value: Asia/Shanghai
+
+  - id: enable_oidc
+    type: bool
+    name: Enable LazyCat OIDC
+    description: Allow users to sign in with their LazyCat account
+    default_value: "true"
+
+  - id: enable_local_login
+    type: bool
+    name: Enable Local Login
+    description: Keep GPTWOL's built-in username and password login enabled
+    default_value: "true"
+
+  - id: local_username
+    type: string
+    name: Local Username
+    description: Username for GPTWOL's built-in local login
+    default_value: admin
+
+  - id: local_password
+    type: secret
+    name: Local Password
+    description: Password for GPTWOL's built-in local login
+    default_value: $random(len=20)
+
+  - id: log_level
+    type: string
+    name: Log Level
+    description: Logging level; use DEBUG, INFO, WARN, or ERROR
+    default_value: INFO
+
+  - id: enable_add_delete
+    type: bool
+    name: Allow Device Changes
+    description: Show the controls for adding and deleting computers
+    default_value: "true"
+
+  - id: enable_refresh
+    type: bool
+    name: Automatic Refresh
+    description: Automatically refresh computer status
+    default_value: "true"
+
+  - id: refresh_interval
+    type: string
+    name: Refresh Interval
+    description: Seconds between automatic computer status checks
+    default_value: "30"
+
+  - id: ping_timeout
+    type: string
+    name: Ping Timeout
+    description: ICMP ping timeout in milliseconds
+    default_value: "300"
+
+  - id: arp_interface
+    type: string
+    name: ARP Interface
+    description: Host LAN interface used for ARP scan and checks; leave empty for automatic detection
+    default_value: ""
+    optional: true
+
+  - id: arp_timeout
+    type: string
+    name: ARP Timeout
+    description: ARP check timeout in milliseconds
+    default_value: "300"
+
+  - id: tcp_timeout
+    type: string
+    name: TCP Timeout
+    description: TCP status-check timeout in seconds
+    default_value: "1"
+
+  - id: enable_l2_wol
+    type: bool
+    name: Enable Layer 2 WOL
+    description: Send Layer 2 Wake-on-LAN frames instead of UDP broadcast packets
+    default_value: "false"
+
+  - id: l2_interface
+    type: string
+    name: Layer 2 Interface
+    description: Host LAN interface used when Layer 2 WOL is enabled
+    default_value: eth0
+
+locales:
+  zh:
+    web_port:
+      name: Web 端口
+      description: GPTWOL 使用的主机端口（1-65535；如果 9527 已被占用请修改）
+    timezone:
+      name: 时区
+      description: 定时任务使用的 IANA 时区，例如 Asia/Shanghai
+    enable_oidc:
+      name: 启用懒猫 OIDC
+      description: 允许用户使用懒猫账号登录
+    enable_local_login:
+      name: 启用本地登录
+      description: 保留 GPTWOL 内置的用户名和密码登录
+    local_username:
+      name: 本地用户名
+      description: GPTWOL 内置本地登录用户名
+    local_password:
+      name: 本地密码
+      description: GPTWOL 内置本地登录密码
+    log_level:
+      name: 日志级别
+      description: 可填写 DEBUG、INFO、WARN 或 ERROR
+    enable_add_delete:
+      name: 允许修改设备
+      description: 显示添加和删除计算机的操作按钮
+    enable_refresh:
+      name: 自动刷新
+      description: 自动刷新计算机在线状态
+    refresh_interval:
+      name: 刷新间隔
+      description: 自动检测计算机状态的间隔秒数
+    ping_timeout:
+      name: Ping 超时
+      description: ICMP Ping 检测的超时时间，单位毫秒
+    arp_interface:
+      name: ARP 网卡
+      description: ARP 扫描和检测使用的主机局域网接口；留空则自动检测
+    arp_timeout:
+      name: ARP 超时
+      description: ARP 检测的超时时间，单位毫秒
+    tcp_timeout:
+      name: TCP 超时
+      description: TCP 状态检测的超时时间，单位秒
+    enable_l2_wol:
+      name: 启用二层 WOL
+      description: 使用二层以太网帧代替 UDP 广播发送网络唤醒包
+    l2_interface:
+      name: 二层 WOL 网卡
+      description: 启用二层 WOL 时使用的主机局域网接口
