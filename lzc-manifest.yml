@@ -18,11 +18,10 @@ application:
             passwordSelector: "input[name='password']"
             submitSelector: "button[type='submit']"
             autoSubmit: false
-
 services:
   gptwol:
-    # upstream: docker.io/misterbabou/gptwol:4.1.0
-    image: registry.lazycat.cloud/czyt/misterbabou/gptwol:ded4acaeb6c1f065
+    # upstream: docker.io/misterbabou/gptwol:7.1.6
+    image: registry.lazycat.cloud/czyt/misterbabou/gptwol:dc7f62d5f7170912
     network_mode: host
     environment:
       - PORT={{ .U.web_port }}
@@ -50,7 +49,6 @@ services:
     binds:
       - /lzcapp/var/db:/app/db
       - /lzcapp/var/cron.d:/etc/cron.d
-
 usage: |
   默认同时启用懒猫账号 OIDC 登录和 GPTWOL 本地账号登录。
   登录页可选择“Login with SSO”，也可使用向导中设置的本地用户名和密码。
