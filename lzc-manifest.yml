@@ -20,8 +20,8 @@ application:
             autoSubmit: false
 services:
   gptwol:
-    # upstream: docker.io/misterbabou/gptwol:7.1.6
-    image: registry.lazycat.cloud/czyt/misterbabou/gptwol:dc7f62d5f7170912
+    # upstream: docker.io/misterbabou/gptwol:7.1.7
+    image: registry.lazycat.cloud/czyt/misterbabou/gptwol:7eb28481a58317d0
     network_mode: host
     environment:
       - PORT={{ .U.web_port }}
